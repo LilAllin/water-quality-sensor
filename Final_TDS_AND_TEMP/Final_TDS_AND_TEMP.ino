@@ -24,11 +24,11 @@ int sensorPin = A1;
 
 void setup() {
   
-  sensors.begin();
-  lcd.init();          // initialize the lcd 
+   sensors.begin();
+   lcd.init();          // initialize the lcd 
  // lcd.init();
  // Turn on the blacklight and print a message.
- lcd.backlight();
+   lcd.backlight();
  // lcd.setCursor(3,0); //a patra coloana, prima linie 
   
  // lcd.setCursor(2,1);
@@ -37,11 +37,11 @@ void setup() {
  
   // lcd.setCursor(2,3); 
    gravityTds.setPin(TdsSensorPin);
-    gravityTds.setAref(5.0);  //reference voltage on ADC, default 5.0V on Arduino UNO
-    gravityTds.setAdcRange(1024);  //1024 for 10bit ADC;4096 for 12bit ADC
-    gravityTds.begin();
+   gravityTds.setAref(5.0);  //reference voltage on ADC, default 5.0V on Arduino UNO
+   gravityTds.setAdcRange(1024);  //1024 for 10bit ADC;4096 for 12bit ADC
+   gravityTds.begin();
  
-  Serial.begin(9600);
+   Serial.begin(9600);
   
 }
 
@@ -49,23 +49,23 @@ void loop() {
   // call sensors.requestTemperatures() to issue a global temperature 
  // request to all devices on the bus 
  // Send the command to get temperature reading
-  sensors.requestTemperatures();
+   sensors.requestTemperatures();
   // You can have more than one DS18B20 on the same bus.  
    // 0 refers to the first IC on the wire 
-  tempC = sensors.getTempCByIndex(0);
-  gravityTds.update();  //sample and calculate 
-    tdsValue = gravityTds.getTdsValue();
-  delay(1000);
+   tempC = sensors.getTempCByIndex(0);
+   gravityTds.update();  //sample and calculate 
+   tdsValue = gravityTds.getTdsValue();
+   delay(1000);
   
-  Serial.println(tempC);
-  lcd.setCursor(0,0);
-  lcd.print("TEMP:");
-  lcd.print(tempC);
-  lcd.print(" C");
-  lcd.setCursor(0,1);
-  lcd.print("TDS:");
-  lcd.print(tdsValue);
-  lcd.print(" ppm");
+   Serial.println(tempC);
+   lcd.setCursor(0,0);
+   lcd.print("TEMP:");
+   lcd.print(tempC);
+   lcd.print(" C");
+   lcd.setCursor(0,1);
+   lcd.print("TDS:");
+   lcd.print(tdsValue);
+   lcd.print(" ppm");
 
 //tensiunea de iesire variaza destul de mult si e greu de masurat
 //incadram in 800 de citiri si luam valoarea medie pentru citire.
@@ -74,19 +74,22 @@ volt = 0;
     {
         volt += ((float)analogRead(sensorPin)/1023)*5;
     }
-    volt = volt/800;
+volt = volt/800;
    // volt = round_to_dp(volt,2);
-    if(volt < 2.5){
+    if(volt < 2.5)
+    {
       ntu = 3000;
-    }else{
+    }
+    else
+    {
    //convertim analog voltage in NTU
-   ntu = -1120.4*square(volt)+5742.3*volt-4353.8; 
+    ntu = -1120.4*square(volt)+5742.3*volt-4353.8; 
     }
 
-Serial.println(volt);
-Serial.println(" V");
-Serial.println(ntu);
-Serial.println(" NTU");
+   Serial.println(volt);
+   Serial.println(" V");
+   Serial.println(ntu);
+   Serial.println(" NTU");
 }
 /*    float round_to_dp( float in_value, int decimal_place )
 {
